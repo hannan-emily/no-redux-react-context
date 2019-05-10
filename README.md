@@ -1,11 +1,9 @@
 # Building a React App with React Context, instead of Redux
+
 Building with the new React Context (now in production), as an alternative to using Redux for state management
 
-For reference: 
-- files called `<name>Template.js` are for use as templates or explanations
-- files without `Template` are in production
-
 ## Resource
+
 Based off this tutorial
 [https://medium.com/octopus-labs-london/replacing-redux-with-react-hooks-and-context-part-1-11b72ffdb533]
 
@@ -17,6 +15,7 @@ Based off this tutorial
 
 - cd into `/no-redux`
 - run `npm start`
+- open `localhost:3000` in your browser, if it does not automically open
 
 ## Steps for Building 
 (notes)
@@ -32,6 +31,5 @@ This stores the default values of state, and passes that data down to any compon
 
 A `consumer` is any component that we connect to Context, to use the Provider's data (so, really any component)
 
-1. Connect Provider to App:
 
 
