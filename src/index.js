@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // how we connect the store to all other components
 import { StoreProvider } from './Store';
+import './index.css';
 
 import App from './App';
 

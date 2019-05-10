@@ -24,7 +24,8 @@ Based off this tutorial
 This stores the default values of state, and passes that data down to any components that are in App.js. Think of this as the top level wrapper, making all the values available to any component.
 1. Replace Redux store: Create state
 1. Replace Redux store: Create reducer, which is a function
-1. Replace Redux store: see steps necessary to create this file in `src/StoreTemplate.js` (follow the comments in that file)
+1. Replace Redux store: Create actions
+1. Replace Redux store: see steps necessary to create this file in `src/Store.js` (follow the comments in that file)
 
 
 *"The provider has all the data and the consumer consumes it"*
