@@ -21,7 +21,26 @@ export default function App() {
       payload: dataJSON._embedded.episodes
     })
   }
-  
+
+  // ACTION to send the episode object to the store
+  const toggleFavAction = episode => {
+    const episodeInFavourites = state.favourites.includes(episode)
+    let dispatchObj = {
+      type: 'ADD_FAV',
+      payload: episode
+    }
+    if (episodeInFavourites) {
+      const favouritesWithoutEpisode = state.favourites.filter(
+        fav => fav.id !== episode.id
+      )
+      dispatchObj = {
+        type: 'REMOVE_FAV',
+        payload: favouritesWithoutEpisode
+      }
+    }
+    return dispatch(dispatchObj)
+  }
+    
   // TRIGGER: STEP 1 - THIS STARTS AN ACTION IN MOTION
   // this is a React hook
   // this will run each time the page loads
@@ -35,28 +54,40 @@ export default function App() {
   return (
     <React.Fragment>
       {console.log(state)}
-      <div className="header">
-        <h1>Rick and Morty</h1>
-        <p>Pick your favourite episodes</p>
-      </div>
-        <section className="episode-layout">
-          {state.episodes.map(episode => {
-            return (
-              <section key={episode.id} className="episode-box">
-                <img
-                  src={episode.image.medium}
-                  alt={`Rick and Morty ${episode.name}`}
-                />
-                <div>{episode.name}</div>
-                <section>
-                  <div>
-                    Season: {episode.season} Number: {episode.number}
-                  </div>
-                </section>
+      <header className="header">
+        <div>
+          <h1>Rick and Morty</h1>
+          <p>Pick your favourite episodes</p>
+        </div>
+        <div>Favourite(s) {state.favourites.length}</div>
+      </header>
+      <section className="episode-layout">
+        {state.episodes.map(episode => {
+          return (
+            <section key={episode.id} className="episode-box">
+              <img
+                src={episode.image.medium}
+                alt={`Rick and Morty ${episode.name}`}
+              />
+              <div>{episode.name}</div>
+              <section style={{ display: 'flex', justifyContent: 'space-between'}}>
+                <div>
+                  Season: {episode.season} Number: {episode.number}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => toggleFavAction(episode)}
+                >
+                  {state.favourites.find(fav => fav.id === episode.id)
+                    ? 'Unfav'
+                    : 'Fav'
+                  }
+                </button>
               </section>
-            )
-          })}
-        </section>
+            </section>
+          )
+        })}
+      </section>
     </React.Fragment>
   )
 }
