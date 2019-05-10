@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from '@reach/router'
 
 // import the store for use by this component
 import { Store } from './Store'
@@ -65,19 +66,20 @@ export default function App() {
     <React.Fragment>
       {/* integrating React Suspense */}
       <React.Suspense fallback={<div>Loading...</div>}>
-
         <header className="header">
           <div>
             <h1>Rick and Morty</h1>
             <p>Pick your favourite episodes</p>
           </div>
-          <div>Favourite(s) {state.favourites.length}</div>
+          <div>
+            <Link to="/">Home</Link>{' '}
+            <Link to="/faves">Favourite(s) {state.favourites.length}</Link>
+          </div>
         </header>
 
         <section className="episode-layout">
           <EpisodesList {...props} />
         </section>
-        
       </React.Suspense>
     </React.Fragment>
   )
