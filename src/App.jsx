@@ -55,12 +55,17 @@ export default function App() {
     state.episodes.length === 0 && fetchDataAction()
   })
 
+  const props = {
+    episodes: state.episodes,
+    toggleFavAction: toggleFavAction,
+    favourites: state.favourites
+  }
+
   return (
     <React.Fragment>
       {/* integrating React Suspense */}
-      <React.Suspense>
+      <React.Suspense fallback={<div>Loading...</div>}>
 
-        {console.log(state)}
         <header className="header">
           <div>
             <h1>Rick and Morty</h1>
@@ -70,31 +75,7 @@ export default function App() {
         </header>
 
         <section className="episode-layout">
-          {state.episodes.map(episode => {
-            return (
-              <section key={episode.id} className="episode-box">
-                <img
-                  src={episode.image.medium}
-                  alt={`Rick and Morty ${episode.name}`}
-                />
-                <div>{episode.name}</div>
-                <section style={{ display: 'flex', justifyContent: 'space-between'}}>
-                  <div>
-                    Season: {episode.season} Number: {episode.number}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => toggleFavAction(episode)}
-                  >
-                    {state.favourites.find(fav => fav.id === episode.id)
-                      ? 'Unfav'
-                      : 'Fav'
-                    }
-                  </button>
-                </section>
-              </section>
-            )
-          })}
+          <EpisodesList {...props} />
         </section>
         
       </React.Suspense>
