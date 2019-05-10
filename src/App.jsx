@@ -3,6 +3,10 @@ import React from 'react'
 // import the store for use by this component
 import { Store } from './Store'
 
+// import seperate episode component
+// using React lazy 
+const EpisodesList = React.lazy(() => import('./EpisodesList'))
+
 export default function App() {
   
   // STEP 3 - THE REDUCER UPDATES THE DATA IN THE STORE
@@ -53,41 +57,47 @@ export default function App() {
 
   return (
     <React.Fragment>
-      {console.log(state)}
-      <header className="header">
-        <div>
-          <h1>Rick and Morty</h1>
-          <p>Pick your favourite episodes</p>
-        </div>
-        <div>Favourite(s) {state.favourites.length}</div>
-      </header>
-      <section className="episode-layout">
-        {state.episodes.map(episode => {
-          return (
-            <section key={episode.id} className="episode-box">
-              <img
-                src={episode.image.medium}
-                alt={`Rick and Morty ${episode.name}`}
-              />
-              <div>{episode.name}</div>
-              <section style={{ display: 'flex', justifyContent: 'space-between'}}>
-                <div>
-                  Season: {episode.season} Number: {episode.number}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => toggleFavAction(episode)}
-                >
-                  {state.favourites.find(fav => fav.id === episode.id)
-                    ? 'Unfav'
-                    : 'Fav'
-                  }
-                </button>
+      {/* integrating React Suspense */}
+      <React.Suspense>
+
+        {console.log(state)}
+        <header className="header">
+          <div>
+            <h1>Rick and Morty</h1>
+            <p>Pick your favourite episodes</p>
+          </div>
+          <div>Favourite(s) {state.favourites.length}</div>
+        </header>
+
+        <section className="episode-layout">
+          {state.episodes.map(episode => {
+            return (
+              <section key={episode.id} className="episode-box">
+                <img
+                  src={episode.image.medium}
+                  alt={`Rick and Morty ${episode.name}`}
+                />
+                <div>{episode.name}</div>
+                <section style={{ display: 'flex', justifyContent: 'space-between'}}>
+                  <div>
+                    Season: {episode.season} Number: {episode.number}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => toggleFavAction(episode)}
+                  >
+                    {state.favourites.find(fav => fav.id === episode.id)
+                      ? 'Unfav'
+                      : 'Fav'
+                    }
+                  </button>
+                </section>
               </section>
-            </section>
-          )
-        })}
-      </section>
+            )
+          })}
+        </section>
+        
+      </React.Suspense>
     </React.Fragment>
   )
 }
