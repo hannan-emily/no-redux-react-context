@@ -7,16 +7,20 @@ export default function EpisodesList(props) {
     return (
       <section key={episode.id} className="episode-box">
         <img
-          src={episode.image.medium}
+          src={episode.image ? episode.image.medium : ''}
           alt={`Rick and Morty ${episode.name}`}
         />
         <div>{episode.name}</div>
-        <section style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <section
+          style={{ display: 'flex', justifyContent: 'space-between' }}
+        >
           <div>
             Season: {episode.season} Number: {episode.number}
           </div>
           <button type="button" onClick={() => toggleFavAction(episode)}>
-            {favourites.find(fav => fav.id === episode.id) ? 'Unfav' : 'Fav'}
+            {favourites.find(fav => fav.id === episode.id)
+              ? 'Unfav'
+              : 'Fav'}
           </button>
         </section>
       </section>
